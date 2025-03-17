@@ -11,3 +11,9 @@ class UserRegisterSerializer(ModelSerializer):
         model = self.Meta.model
         instance = model.objects.create_user(**validated_data)
         return instance
+
+
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["email", "username", "first_name", "last_name"]
