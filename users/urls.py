@@ -8,4 +8,5 @@ app_name = UsersConfig.name
 urlpatterns = [
     path("token/", views.CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token_refresh/", views.CustomTokenRefreshView.as_view(), name="token_refresh"),
+    path("user_register/", views.RegisterUserAPIView.as_view(), name="user_register")
 ]
