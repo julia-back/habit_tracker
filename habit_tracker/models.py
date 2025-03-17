@@ -7,9 +7,9 @@ from datetime import time
 class Habit(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    place = models.CharField(max_length=50, blank=True, null=True)
-    time_to_complete = models.TimeField(blank=True, null=True, validators=[MaxValueValidator(time(minute=2))])
-    action = models.TextField(max_length=1000, blank=True, null=True)
+    place = models.CharField(max_length=50)
+    process_time = models.TimeField(blank=True, null=True, validators=[MaxValueValidator(time(minute=2))])
+    action = models.TextField(max_length=1000)
     joy_habit = models.ForeignKey("self", on_delete=models.SET_NULL, blank=True, null=True)
     reward = models.CharField(max_length=250, blank=True, null=True)
     is_joy = models.BooleanField()
