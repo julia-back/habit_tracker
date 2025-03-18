@@ -23,6 +23,7 @@ INSTALLED_APPS = [
 
     "rest_framework",
     "rest_framework_simplejwt",
+    "drf_spectacular",
     "corsheaders",
 
     "habit_tracker",
@@ -35,7 +36,8 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated"
-    ]
+    ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 MIDDLEWARE = [
@@ -113,3 +115,11 @@ AUTH_USER_MODEL = "users.User"
 CORS_ALLOWED_ORIGINS = ["http://localhost:8000"]
 CORS_ALLOW_ALL_ORIGINS = False
 CSRF_TRUSTED_ORIGINS = ["http://read-and-write.localhost:8000"]
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Habit Tracker API",
+    "DESCRIPTION": "Habit Tracker API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "COMPONENT_SPLIT_REQUEST": True,
+}
