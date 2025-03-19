@@ -15,6 +15,7 @@ def send_welcome_message(message):
                                       "тебе сформировать полезные привычки")
     bot.register_next_step_handler(message, get_email_user)
 
+
 def get_email_user(message):
     email = message.text
     try:
@@ -22,7 +23,7 @@ def get_email_user(message):
         user.id_chat_telegram_bot = message.chat.id
         user.save()
         bot.send_message(message.chat.id, "Приятно познакомиться! Теперь я буду отправлять "
-                                      "тебе уведомления, чтобы ты не забывал о своих привычках")
+                                          "тебе уведомления, чтобы ты не забывал о своих привычках")
     except ObjectDoesNotExist:
         bot.send_message(message.chat.id, "Упс, я не знаю такого email... "
                                           "Давай начнем все с начала, отправь мне '/start'")

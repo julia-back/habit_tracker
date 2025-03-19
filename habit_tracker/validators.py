@@ -31,7 +31,8 @@ class IsJoyHabitForJoyHabitField:
 class PeriodInDaysNoMoreSeven:
 
     def __call__(self, attrs):
-        if attrs.get("period_in_days") > 7:
-            raise ValidationError("Периодичность повторения привычки не может быть более 7 дней")
-        if attrs.get("period_in_days") < 1:
-            raise ValidationError("Периодичность привычки не может быть меньше 1 дня")
+        if attrs.get("period_in_days"):
+            if attrs.get("period_in_days") > 7:
+                raise ValidationError("Периодичность повторения привычки не может быть более 7 дней")
+            if attrs.get("period_in_days") < 1:
+                raise ValidationError("Периодичность привычки не может быть меньше 1 дня")

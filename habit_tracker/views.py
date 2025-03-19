@@ -4,6 +4,7 @@ from .permissions import IsOwnerHabit
 from .serializers import HabitSerializer
 from .models import Habit
 from .pagination import HabitListPageNumberPagination
+from .tasks import create_task
 
 
 class HabitCreateAPIView(generics.CreateAPIView):
@@ -11,7 +12,12 @@ class HabitCreateAPIView(generics.CreateAPIView):
     serializer_class = HabitSerializer
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        habit = serializer.save(user=self.request.user)
+
+        id_chat = self.request.user.id_chat_telegram_bot
+        period_in_days = habit.period_in_days
+        in_time = habit.notification_time
+        create_task(habit, period_in_days, in_time, id_chat)
 
 
 class HabitListAPIView(generics.ListAPIView):
