@@ -5,6 +5,13 @@ from datetime import time
 
 
 class Habit(models.Model):
+    """
+    Модель привычки, связана с моделью пользователя. В зависимости от поля is_joy
+    может быть полезной (is_joy = False) и будет иметь возможность заполнения полей
+    joy_habit (связаная приятная привычка) и reward (вознаграждение на выполнение привычки)
+    или может быть приятной (is_joy = True). В зависимости от значения поля is_public
+    может быть публичной и доступной для просмотра другими пользователями.
+    """
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     place = models.CharField(max_length=50)

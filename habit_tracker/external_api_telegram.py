@@ -9,6 +9,8 @@ bot = TeleBot(TELEGRAM_BOT_TOKEN)
 
 @bot.message_handler(commands=["start"])
 def send_welcome_message(message):
+    """Функция для приветствия ботом пользователя в ответ на команду /start"""
+
     bot.send_message(message.chat.id, "Привет и добро пожаловать в HabitTracker! "
                                       "Познакомимся? Введи почту, с которой "
                                       "зарегистрировался в приложении, чтобы я мог помочь "
@@ -17,6 +19,11 @@ def send_welcome_message(message):
 
 
 def get_email_user(message):
+    """
+    Функция для получения email пользователя. Идентифицирует пользователя и заполняет в
+    соответствующей модели пользователя поле id_chat_telegram_bot
+    """
+
     email = message.text
     try:
         user = User.objects.filter(email=email).get()

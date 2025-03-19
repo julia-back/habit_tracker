@@ -2,6 +2,7 @@ from rest_framework.validators import ValidationError
 
 
 class JoyHabitNotHaveJoyHabitOrReward:
+    """Класс валидатора. Проверяет, что приятная привычка не имеет связанной привычки и вознаграждения."""
 
     def __call__(self, attrs):
         if attrs.get("is_joy"):
@@ -12,6 +13,10 @@ class JoyHabitNotHaveJoyHabitOrReward:
 
 
 class HabitHaveJoyHabitOrReward:
+    """
+    Класс валидатора. Проверяет, что у полезной привычки заполнено только одно из
+    полей: либо поле связанной привычки, либо поле вознаграждения.
+    """
 
     def __call__(self, attrs):
         if attrs.get("is_joy") is False:
@@ -21,6 +26,7 @@ class HabitHaveJoyHabitOrReward:
 
 
 class IsJoyHabitForJoyHabitField:
+    """Класс валидатора. Проверяет, что связанная привычка является приятной."""
 
     def __call__(self, attrs):
         if attrs.get("joy_habit"):
@@ -29,6 +35,7 @@ class IsJoyHabitForJoyHabitField:
 
 
 class PeriodInDaysNoMoreSeven:
+    """Класс валидатора. Проверяет, что периодичность повторения привычки от 1 до 7 дней."""
 
     def __call__(self, attrs):
         if attrs.get("period_in_days"):

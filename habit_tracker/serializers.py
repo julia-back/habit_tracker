@@ -5,6 +5,7 @@ from .validators import (IsJoyHabitForJoyHabitField, JoyHabitNotHaveJoyHabitOrRe
 
 
 class HabitSerializer(ModelSerializer):
+    """Класс сериализатора модели привычки."""
 
     class Meta:
         model = Habit

@@ -6,6 +6,8 @@ import json
 
 
 def create_task(habit, period_in_days, in_time, id_chat):
+    """Функция создания периодической задачи для отправки уведомления о выполнении привычки."""
+
     reward_for_habit = habit.joy_habit if habit.joy_habit else habit.reward
     if not reward_for_habit:
         reward_for_habit = "завари себе вкусный чай"
@@ -32,4 +34,6 @@ def create_task(habit, period_in_days, in_time, id_chat):
 
 @shared_task
 def send_notification(id_chat, text):
+    """Функция-задача для отправки увеломления пользователю."""
+
     bot.send_message(id_chat, text)
