@@ -1,4 +1,4 @@
-from celery import shared_task, Task
+from celery import shared_task
 from django_celery_beat.models import PeriodicTask, CrontabSchedule
 from .external_api_telegram import bot
 from .models import Habit
