@@ -1,8 +1,10 @@
+import json
+
 from celery import shared_task
-from django_celery_beat.models import PeriodicTask, CrontabSchedule
+from django_celery_beat.models import CrontabSchedule, PeriodicTask
+
 from .external_api_telegram import bot
 from .models import Habit
-import json
 
 
 def create_task(habit, period_in_days, in_time, id_chat):

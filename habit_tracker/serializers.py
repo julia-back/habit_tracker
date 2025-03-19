@@ -1,7 +1,9 @@
 from rest_framework.serializers import ModelSerializer
+
 from .models import Habit
-from .validators import (IsJoyHabitForJoyHabitField, JoyHabitNotHaveJoyHabitOrReward,
-                         HabitHaveJoyHabitOrReward, PeriodInDaysNoMoreSeven)
+from .validators import (HabitHaveJoyHabitOrReward, IsJoyHabitForJoyHabitField,
+                         JoyHabitNotHaveJoyHabitOrReward,
+                         PeriodInDaysNoMoreSeven)
 
 
 class HabitSerializer(ModelSerializer):
@@ -9,7 +11,7 @@ class HabitSerializer(ModelSerializer):
 
     class Meta:
         model = Habit
-        exclude = ["user"]
+        fields = "__all__"
         validators = [JoyHabitNotHaveJoyHabitOrReward(),
                       HabitHaveJoyHabitOrReward(),
                       IsJoyHabitForJoyHabitField(),

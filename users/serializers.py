@@ -1,6 +1,8 @@
-from .models import User
 from rest_framework import serializers
+
 from config.settings import TELEGRAM_BOT_NAME
+
+from .models import User
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):

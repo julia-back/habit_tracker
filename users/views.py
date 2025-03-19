@@ -1,9 +1,11 @@
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import generics
-from .serializers import UserRegisterSerializer, UserSerializer
-from .permissions import IsOwnerProfile
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView)
+
 from .models import User
+from .permissions import IsOwnerProfile
+from .serializers import UserRegisterSerializer, UserSerializer
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):

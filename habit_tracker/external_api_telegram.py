@@ -1,8 +1,8 @@
+from django.core.exceptions import ObjectDoesNotExist
 from telebot import TeleBot
+
 from config.settings import TELEGRAM_BOT_TOKEN
 from users.models import User
-from django.core.exceptions import ObjectDoesNotExist
-
 
 bot = TeleBot(TELEGRAM_BOT_TOKEN)
 

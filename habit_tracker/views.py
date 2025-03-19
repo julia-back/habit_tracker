@@ -1,9 +1,10 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsOwnerHabit
-from .serializers import HabitSerializer
+
 from .models import Habit
 from .pagination import HabitListPageNumberPagination
+from .permissions import IsOwnerHabit
+from .serializers import HabitSerializer
 from .tasks import create_task
 
 
