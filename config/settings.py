@@ -13,7 +13,6 @@ DEBUG = True if os.getenv("DEBUG") == "True" else False
 
 ALLOWED_HOSTS = []
 
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -23,10 +22,24 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "rest_framework",
+    "rest_framework_simplejwt",
+    "django_celery_beat",
+    "drf_spectacular",
+    "corsheaders",
 
     "habit_tracker",
     "users",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication"
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated"
+    ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -36,6 +49,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware"
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -58,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -69,7 +82,6 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -86,20 +98,38 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Moscow"
 USE_I18N = True
 USE_TZ = True
-
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 AUTH_USER_MODEL = "users.User"
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:8000"]
+CORS_ALLOW_ALL_ORIGINS = False
+CSRF_TRUSTED_ORIGINS = ["http://read-and-write.localhost:8000"]
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Habit Tracker API",
+    "DESCRIPTION": "Habit Tracker API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "COMPONENT_SPLIT_REQUEST": True,
+}
+
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_BOT_NAME = os.getenv("TELEGRAM_BOT_NAME")
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
