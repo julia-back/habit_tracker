@@ -11,7 +11,7 @@ class HabitSerializer(ModelSerializer):
 
     class Meta:
         model = Habit
-        fields = "__all__"
+        fields = ["place", "action", "is_joy", "notification_time"]
         validators = [JoyHabitNotHaveJoyHabitOrReward(),
                       HabitHaveJoyHabitOrReward(),
                       IsJoyHabitForJoyHabitField(),

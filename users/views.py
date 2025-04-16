@@ -27,8 +27,8 @@ class UserRegisterAPIView(generics.CreateAPIView):
     Доступен неавторизованным пользователям.
     """
 
-    serializer_class = UserRegisterSerializer
     permission_classes = [AllowAny]
+    serializer_class = UserRegisterSerializer
 
 
 class UserRetrieveAPIView(generics.RetrieveAPIView):

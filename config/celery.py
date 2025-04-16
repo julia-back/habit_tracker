@@ -9,4 +9,8 @@ app = Celery('config')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
-app.autodiscover_tasks()
+app.autodiscover_tasks(["habit_tracker.tasks.send_notification"])
+
+app.conf.beat_max_loop_interval = 10
+
+app.conf.beat_scheduler = 'celery.beat.PersistentScheduler'
