@@ -12,6 +12,7 @@ services:
       - .env
     environment:
       DB_HOST: db
+      CELERY_BROKER_URL: redis://redis:6379/0
     command: bash -c "poetry run python manage.py migrate && poetry run python manage.py runserver 0.0.0.0:8000"
     expose:
       - 8000
@@ -21,6 +22,7 @@ services:
     restart: on-failure
     depends_on:
       - db
+      - celery-beat
 #    & poetry run python manage.py runtelegrambot
 
   db:
@@ -30,6 +32,8 @@ services:
       PGTZ: Europe/Moscow
     env_file:
       - .env
+    expose:
+      - 5432
     volumes:
       - postgres_volume:/var/lib/postgresql/data
     restart: on-failure
@@ -40,6 +44,8 @@ services:
       - 6379
     environment:
       TZ: Europe/Moscow
+    volumes:
+      - redis_volume:/data
 
   celery:
     build: .
@@ -55,14 +61,16 @@ services:
   celery-beat:
     build: .
     environment:
+      DB_HOST: db
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/0
     env_file:
       - .env
-    command: "poetry run celery -A config beat -l DEBUG"
+    command: "poetry run celery -A config beat -l DEBUG --scheduler django_celery_beat.schedulers:DatabaseScheduler"
     depends_on:
       - redis
       - celery
+      - db
 
   telegram-bot:
     build: .
