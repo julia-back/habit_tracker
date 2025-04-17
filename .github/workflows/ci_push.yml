@@ -35,7 +35,7 @@ jobs:
         run: poetry run python manage.py migrate
 
       - name: Run tests
-        environment:
+        env:
           DB_NAME=test_db
           DB_HOST=postgres
           DB_PORT=5432
