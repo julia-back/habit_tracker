@@ -5,6 +5,16 @@ on: [push]
 test:
   runs-on: ubuntu-latest
 
+  services:
+    postgres:
+      image: postgres:17.4
+      environment:
+        POSTGRES_DB: test_db
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+      ports:
+        - 5432:5432
+
   steps:
     - name: Check out code
       uses: actions/checkout@v3
@@ -18,7 +28,17 @@ test:
       run: |
         python pip install --upgrade pip
         pip install poetry
-        poetry install
+        poetry install --no-root
 
     - name: Run migrations
-      run: poetry run python manage.py test
+      run: poetry run python manage.py migrate
+
+    - name: Run tests
+      environment:
+        DB_NAME=test_db
+        DB_HOST=postgres
+        DB_PORT=5432
+        DB_USER=postgres
+        DB_PASSWORD=postgres
+      run: |
+        poetry run python manage.py test
