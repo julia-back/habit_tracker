@@ -35,21 +35,13 @@ jobs:
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          DB_NAME: test_db
-          DB_HOST: postgres
-          DB_PORT: 5432
-          DB_USER: postgres
-          DB_PASSWORD: postgres
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
         run: poetry run python manage.py migrate
 
       - name: Run tests
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          DB_NAME: test_db
-          DB_HOST: postgres
-          DB_PORT: 5432
-          DB_USER: postgres
-          DB_PASSWORD: postgres
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
         run: |
           poetry run python manage.py test
