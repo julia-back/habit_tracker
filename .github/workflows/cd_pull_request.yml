@@ -1,10 +1,6 @@
 name: Deploy by pull request
 
 on: [push]
-#  workflow_run:
-#    workflows: ["Test code by Push"]
-#    types:
-#      - completed
 
 jobs:
   build:
