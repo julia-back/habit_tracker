@@ -1,0 +1,5 @@
+name: Deploy by pull request
+
+on:
+  workflow_run:
+    workflows
