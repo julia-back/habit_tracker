@@ -1,10 +1,10 @@
 name: Deploy by pull request
 
-on:
-  workflow_run:
-    workflows: ["Test code by Push"]
-    types:
-      - completed
+on: [push]
+#  workflow_run:
+#    workflows: ["Test code by Push"]
+#    types:
+#      - completed
 
 build:
   runs-on: ubuntu-latest
