@@ -40,8 +40,8 @@ jobs:
 
       - name: Run tests
         env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
         run: |
           poetry run python manage.py test
