@@ -31,12 +31,16 @@ jobs:
           pip install poetry
           poetry install --no-root
 
-#      - name: Run migrations
-#        env:
-#          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-#          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-#          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
-#        run: poetry run python manage.py migrate
+      - name: Run migrations
+        env:
+          DB_NAME: test_db
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: poetry run python manage.py migrate
 
       - name: Run tests
         env:
