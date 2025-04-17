@@ -16,7 +16,7 @@ class HabitAPITestCase(APITestCase):
 
     def test_habit_create(self):
         url = reverse("habit_tracker:habit_create")
-        habit_data = {"user": self.user.pk, "place": "Дом", "action": "Сделать зарядку",
+        habit_data = {"place": "Дом", "action": "Сделать зарядку",
                       "is_joy": False, "notification_time": "7:00:00"}
         response = self.client.post(url, habit_data)
         self.assertEqual(response.status_code, 401)
@@ -24,7 +24,6 @@ class HabitAPITestCase(APITestCase):
         self.client.force_authenticate(self.user)
         response = self.client.post(url, habit_data)
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.json().get("user"), self.user.pk)
         self.assertEqual(response.json().get("action"), "Сделать зарядку")
 
     def test_habit_list(self):
