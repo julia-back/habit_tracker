@@ -36,11 +36,10 @@ jobs:
 
       - name: Run tests
         env:
-          DB_NAME=test_db
-          DB_HOST=postgres
-          DB_PORT=5432
-          DB_USER=postgres
-          DB_PASSWORD=postgres
+          DB_NAME: test_db
+          DB_HOST: postgres
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: postgres
         run: |
           poetry run python manage.py test
-
