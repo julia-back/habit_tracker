@@ -6,16 +6,17 @@ on: [push]
 #    types:
 #      - completed
 
-build:
-  runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  steps:
-    - name:
+    steps:
+      - name:
 
 
-deploy:
-  runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
 
-  steps:
+    steps:
 
 
