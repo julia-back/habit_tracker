@@ -42,3 +42,4 @@ test:
         DB_PASSWORD=postgres
       run: |
         poetry run python manage.py test
+
