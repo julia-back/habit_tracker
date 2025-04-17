@@ -7,7 +7,7 @@ services:
       - web
 
   web:
-    build: .
+    image: ${DOCKER_HUB_USERNAME}/habit_tracker:latest
     env_file:
       - .env
     environment:
@@ -23,7 +23,6 @@ services:
     depends_on:
       - db
       - celery-beat
-#    & poetry run python manage.py runtelegrambot
 
   db:
     image: postgres:17.4
@@ -48,7 +47,7 @@ services:
       - redis_volume:/data
 
   celery:
-    build: .
+    image: ${DOCKER_HUB_USERNAME}/habit_tracker:latest
     environment:
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/0
@@ -59,7 +58,7 @@ services:
       - redis
 
   celery-beat:
-    build: .
+    build: ${DOCKER_HUB_USERNAME}/habit_tracker:latest
     environment:
       DB_HOST: db
       CELERY_BROKER_URL: redis://redis:6379/0
@@ -73,7 +72,7 @@ services:
       - db
 
   telegram-bot:
-    build: .
+    build: ${DOCKER_HUB_USERNAME}/habit_tracker:latest
     environment:
       DB_HOST: db
     env_file:
