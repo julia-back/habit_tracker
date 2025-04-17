@@ -34,9 +34,9 @@ jobs:
 
       - name: Copy files to server
         run: |
-          scp -i ${{ secrets.PATH_SSH_KEY }} -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/
-          scp -i ${{ secrets.PATH_SSH_KEY }} -o StrictHostKeyChecking=no ./nginx/Dockerfile ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/nginx/
-          scp -i ${{ secrets.PATH_SSH_KEY }} -o StrictHostKeyChecking=no ./nginx/nginx.conf ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/nginx/
+          scp -o StrictHostKeyChecking=no docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/
+          scp -o StrictHostKeyChecking=no ./nginx/Dockerfile ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/nginx/
+          scp -o StrictHostKeyChecking=no ./nginx/nginx.conf ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:~/app/nginx/
 
       - name: Start containers on server
         run: |
