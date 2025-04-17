@@ -42,6 +42,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
           cd ~/app
+          grep -q '^IMAGE_TAG=' .env && sed -i "s/^IMAGE_TAG=.*/IMAGE_TAG=${{ github.sha }}/" .env || echo "IMAGE_TAG=${{ github.sha }}" >> .env
           echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
           sudo docker compose pull
           sudo docker compose down || true

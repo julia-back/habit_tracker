@@ -7,7 +7,7 @@ services:
       - web
 
   web:
-    image: ${DOCKER_HUB_USERNAME}/habit_tracker:latest
+    image: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
     env_file:
       - .env
     environment:
@@ -47,7 +47,7 @@ services:
       - redis_volume:/data
 
   celery:
-    image: ${DOCKER_HUB_USERNAME}/habit_tracker:latest
+    image: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
     environment:
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/0
@@ -58,7 +58,7 @@ services:
       - redis
 
   celery-beat:
-    build: ${DOCKER_HUB_USERNAME}/habit_tracker:latest
+    build: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
     environment:
       DB_HOST: db
       CELERY_BROKER_URL: redis://redis:6379/0
@@ -72,7 +72,7 @@ services:
       - db
 
   telegram-bot:
-    build: ${DOCKER_HUB_USERNAME}/habit_tracker:latest
+    build: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
     environment:
       DB_HOST: db
     env_file:
