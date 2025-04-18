@@ -58,7 +58,7 @@ services:
       - redis
 
   celery-beat:
-    build: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
+    image: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
     environment:
       DB_HOST: db
       CELERY_BROKER_URL: redis://redis:6379/0
@@ -72,7 +72,7 @@ services:
       - db
 
   telegram-bot:
-    build: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
+    image: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
     environment:
       DB_HOST: db
     env_file:
