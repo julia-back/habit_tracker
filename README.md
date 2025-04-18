@@ -7,7 +7,9 @@
 
 ## Содержание
 - Установка
-- Использование
+- Использование локально
+- Использование локально через Docker и Docker Compose
+- Использование на удаленном сервере
 - Тестирование
 - Документация
 
@@ -29,7 +31,7 @@
 **Создайте базу данных и выполните миграции:** ```python manage.py migrate```
 
 
-## Использование
+## Использование локально
 
 **Запустите локальный сервер:** ```python manage.py runserver```
 
@@ -71,10 +73,61 @@
 а так же имеют другие ограничения.
 
 
+## Использование локально через Docker и Docker Compose
+После этапа установки запустите команду ```sudo docker compose up -d```
+
+## Использование на удаленном сервере
+Приложение автоматически деплоится на удаленный сервер после подтверждения пул реквеста в ветку
+main.
+Чтобы развернуть приложение на своем сервере:
+1. Создать виртуальный сервер на удобной облачной платформе.
+2. Настроить файервол, открыть порты: 80, 443, 22.
+3. Установить Docker Engine и другие необходимые пакеты с помощью следующих команд:
+```
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+6. Убедитесь, что установка прошла успешно, запустив hello-worldобраз:
+```
+sudo docker run hello-world
+```
+
+7. Скопируйте файл .env с локальной машины на удаленный сервер.
+```
+scp -i path\to\ssh_key path\to\.env user@IP_server:~/app/
+```
+
+8. Измените триггер для деплоя в файле cd_pull_request.yml
+```
+name: Deploy by pull request
+
+on: [push]
+```
+
+9. Сделайте коммит и запуште изменения.
+
+
 ## Тестирование
 Тесты находятся в каждом приложении в директории tests. Вы можете выполнить
 проверку, выполнив команду ```python manage.py test```, и проверить покрытие
 кода тестами с помощью команды ```coverage run manage.py test```.
+
+При пуше коммита на удаленный репозиторий код тестируется автоматически.
 
 
 ## Документация

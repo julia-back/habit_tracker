@@ -5,9 +5,10 @@ services:
       - 80:80
     depends_on:
       - web
+    restart: on-failure
 
   web:
-    build: .
+    image: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
     env_file:
       - .env
     environment:
@@ -23,7 +24,6 @@ services:
     depends_on:
       - db
       - celery-beat
-#    & poetry run python manage.py runtelegrambot
 
   db:
     image: postgres:17.4
@@ -46,9 +46,10 @@ services:
       TZ: Europe/Moscow
     volumes:
       - redis_volume:/data
+    restart: on-failure
 
   celery:
-    build: .
+    image: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
     environment:
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/0
@@ -57,9 +58,10 @@ services:
     command: "poetry run celery -A config worker -l INFO"
     depends_on:
       - redis
+    restart: on-failure
 
   celery-beat:
-    build: .
+    image: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
     environment:
       DB_HOST: db
       CELERY_BROKER_URL: redis://redis:6379/0
@@ -71,14 +73,16 @@ services:
       - redis
       - celery
       - db
+    restart: on-failure
 
   telegram-bot:
-    build: .
+    image: ${DOCKER_HUB_USERNAME}/habit_tracker:${IMAGE_TAG}
     environment:
       DB_HOST: db
     env_file:
       - .env
     command: poetry run python manage.py runtelegrambot
+    restart: on-failure
 
 
 networks:
